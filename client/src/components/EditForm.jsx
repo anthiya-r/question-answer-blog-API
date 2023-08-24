@@ -48,11 +48,15 @@ function EditForm() {
   }, []);
 
   return (
-    <form className="edit-form" onSubmit={handleUpdate}>
+    <form
+      className="edit-form create-form text-[#9C3940] font-bold flex flex-col gap-4 mb-6"
+      onSubmit={handleUpdate}
+    >
       <div className="input-container">
         <label htmlFor="question-topic">
           Question Topic
           <input
+            className="border border-[#9C3940] p-1 rounded-md placeholder:font-light mt-2"
             type="text"
             id="question-topic"
             placeholder="Enter question topic"
@@ -66,6 +70,7 @@ function EditForm() {
         <label htmlFor="description">
           Description
           <textarea
+            className="border border-[#9C3940] p-1 rounded-md placeholder:font-light mt-2"
             id="description"
             name="description"
             placeholder="Enter description here"
@@ -81,6 +86,7 @@ function EditForm() {
         <label htmlFor="category">
           Category
           <select
+            className="text-sm text-slate-400 font-light border border-[#9C3940] rounded-md p-1"
             id="category"
             name="category"
             value={category}
@@ -94,9 +100,6 @@ function EditForm() {
             <option value="Etc">Etc.</option>
           </select>
         </label>
-      </div>
-      <div className="form-actions">
-        <button type="submit">Update</button>
       </div>
     </form>
   );

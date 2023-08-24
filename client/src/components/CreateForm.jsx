@@ -27,14 +27,18 @@ function CreateForm() {
   };
 
   return (
-    <form className="create-form" onSubmit={handleSubmit}>
-      <div className="input-container">
-        <label htmlFor="question-topic">
+    <form
+      className="create-form text-[#9C3940] font-bold flex flex-col gap-4 mb-6"
+      onSubmit={handleSubmit}
+    >
+      <div className="input-container ">
+        <label htmlFor="question-topic ">
           Question Topic
           <input
+            className="border border-[#9C3940] p-1 rounded-md placeholder:font-light mt-2"
             type="text"
             id="question-topic"
-            placeholder="Enter question topic"
+            placeholder="Enter question topic..."
             onChange={(event) => setTopic(event.target.value)}
             value={topic}
             required
@@ -45,9 +49,10 @@ function CreateForm() {
         <label htmlFor="description">
           Description
           <textarea
+            className="border border-[#9C3940] p-1 rounded-md placeholder:font-light mt-2"
             id="description"
             name="description"
-            placeholder="Enter description here"
+            placeholder="Enter description here..."
             onChange={(event) => setDescription(event.target.value)}
             value={description}
             rows={4}
@@ -60,6 +65,7 @@ function CreateForm() {
         <label htmlFor="category">
           Category
           <select
+            className="text-sm text-slate-400 font-light border border-[#9C3940] rounded-md p-1"
             id="category"
             name="category"
             value={category}
@@ -73,9 +79,6 @@ function CreateForm() {
             <option value="Etc">Etc.</option>
           </select>
         </label>
-      </div>
-      <div className="form-actions">
-        <button type="submit">Create</button>
       </div>
     </form>
   );
