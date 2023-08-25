@@ -5,7 +5,7 @@ import cors from "cors";
 
 async function init() {
   const app = express();
-  const port = 4000;
+  const port = 4001;
 
   app.use(cors());
   await client.connect();
@@ -16,7 +16,7 @@ async function init() {
   app.use("/quora", quoraRouter);
 
   app.get("/", (req, res) => {
-    return res.json("Hello Skill Checkpoint #2");
+    return res.json("Hello World");
   });
 
   app.get("*", (req, res) => {

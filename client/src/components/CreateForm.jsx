@@ -10,7 +10,7 @@ function CreateForm() {
 
   const createQuestion = async () => {
     try {
-      await axios.post("http://localhost:4000/quora/questions", {
+      await axios.post("http://localhost:4001/quora/questions", {
         topic,
         description,
         category,

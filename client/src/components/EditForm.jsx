@@ -15,7 +15,7 @@ function EditForm() {
 
   const getCurrentQuestion = async () => {
     const result = await axios.get(
-      `http://localhost:4000/quora/questions/${params.questionId}`
+      `http://localhost:4001/quora/questions/${params.questionId}`
     );
     setTopic(result.data.data.topic);
     setDescription(result.data.data.description);
@@ -26,7 +26,7 @@ function EditForm() {
 
   const updateQuestion = async () => {
     await axios.put(
-      `http://localhost:4000/quora/questions/${params.questionId}`,
+      `http://localhost:4001/quora/questions/${params.questionId}`,
       {
         topic,
         description,

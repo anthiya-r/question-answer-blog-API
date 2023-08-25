@@ -19,7 +19,7 @@ function Homepage() {
       setIsError(false);
       setIsLoading(true);
       const results = await axios.get(
-        `http://localhost:4000/quora/questions?topic=${searchText}&category=${category}&page=${currentPage}`
+        `http://localhost:4001/quora/questions?topic=${searchText}&category=${category}&page=${currentPage}`
       );
       console.log(results);
       setQuestions(results.data.data);
@@ -64,7 +64,7 @@ function Homepage() {
   const likeAction = async (questionId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/quora/questions/${questionId}/like-dislike`,
+        `http://localhost:4001/quora/questions/${questionId}/like-dislike`,
         { action: "like" }
       );
       if (response.status === 200) {
@@ -86,7 +86,7 @@ function Homepage() {
   const dislikeAction = async (questionId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/quora/questions/${questionId}/like-dislike`,
+        `http://localhost:4001/quora/questions/${questionId}/like-dislike`,
         { action: "dislike" }
       );
       if (response.status === 200) {
@@ -108,7 +108,7 @@ function Homepage() {
   const deleteQuestion = async (questionId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/quora/questions/${questionId}`
+        `http://localhost:4001/quora/questions/${questionId}`
       );
       if (response.status === 200) {
         setQuestions((prevQuestions) =>
@@ -209,15 +209,15 @@ function Homepage() {
                     </p>
 
                     <div className="vote-container bg-[#FBE7E0] flex py-4">
-                      <button onClick={() => likeAction(question._id)}>
-                        <AiTwotoneLike className="bg-[#FBE7E0] hover:opacity-75" />
+                      <button onClick={() => dislikeAction(question._id)}>
+                        <AiTwotoneDislike className="bg-[#FBE7E0] hover:opacity-75" />
                       </button>
                       <p className="bg-[#FBE7E0] px-3 py-1 font-bold text-lg text-center">
                         Likes:{" "}
                         {question.likes !== undefined ? question.likes : 0}
                       </p>
-                      <button onClick={() => dislikeAction(question._id)}>
-                        <AiTwotoneDislike className="bg-[#FBE7E0] hover:opacity-75" />
+                      <button onClick={() => likeAction(question._id)}>
+                        <AiTwotoneLike className="bg-[#FBE7E0] hover:opacity-75" />
                       </button>
                     </div>
                   </div>

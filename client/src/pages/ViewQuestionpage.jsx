@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import CreateAnswerForm from "../components/CreateAnswerForm";
+import { AiTwotoneLike } from "@react-icons/all-files/ai/AiTwotoneLike";
+import { AiTwotoneDislike } from "@react-icons/all-files/ai/AiTwotoneDislike";
 
 function ViewQuestionPage() {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ function ViewQuestionPage() {
   const getQuestionById = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/quora/questions/${params.questionId}`
+        `http://localhost:4001/quora/questions/${params.questionId}`
       );
       setQuestion(response.data.data);
     } catch (error) {
@@ -21,12 +23,12 @@ function ViewQuestionPage() {
 
   useEffect(() => {
     getQuestionById();
-  }, []);
+  }, [question]);
 
   const likeAction = async (answerId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/quora/questions/${params.questionId}/answers/${answerId}/like-dislike`,
+        `http://localhost:4001/quora/questions/${params.questionId}/answers/${answerId}/like-dislike`,
         { action: "like" }
       );
       if (response.status === 201) {
@@ -49,7 +51,7 @@ function ViewQuestionPage() {
   const dislikeAction = async (answerId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/quora/questions/${params.questionId}/answers/${answerId}/like-dislike`,
+        `http://localhost:4001/quora/questions/${params.questionId}/answers/${answerId}/like-dislike`,
         { action: "dislike" }
       );
       if (response.status === 201) {
@@ -72,7 +74,7 @@ function ViewQuestionPage() {
   const handleDeleteAnswer = async (answerId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/quora/questions/${params.questionId}/answers/${answerId}`
+        `http://localhost:4001/quora/questions/${params.questionId}/answers/${answerId}`
       );
       if (response.status === 200) {
         setQuestion((prevQuestion) => ({
@@ -88,39 +90,80 @@ function ViewQuestionPage() {
   };
 
   return (
-    <div className="view-question-wrapper">
-      <h1>View Question By ID</h1>
-      <div className="question-container">
-        <h2>Question: {question.topic}</h2>
-        <p>Description: {question.description}</p>
-        <p>Likes: {question.likes}</p>
-        <h3>Category: {question.category}</h3>
-        <p>Created date: {question.created_at}</p>
+    <div className="view-question-wrapper p-8 text-[#9C3940] lg:flex lg:flex-col lg:justify-center lg:items-center">
+      <h1 className="text-center text-3xl font-bold pb-5">
+        View Question Page
+      </h1>
+      <div className="question-container border border-[#FBE7E0] rounded-md drop-shadow-md w-[100%] lg:w-[50%]">
+        <h1 className="bg-[#FBE7E0] px-3 py-1 font-bold text-lg pt-5">
+          Question:{" "}
+          <span className="font-light bg-[#FBE7E0] text-[#d48389] text-base">
+            {" "}
+            {question.topic}
+          </span>
+        </h1>
+        <p className="bg-[#FBE7E0] px-3 py-1 font-bold text-lg">
+          Description:{" "}
+          <span className="font-light bg-[#FBE7E0] text-[#d48389] text-base">
+            {question.description}
+          </span>
+        </p>
+        <h3 className="bg-[#FBE7E0] px-3 py-1 font-bold text-lg">
+          Category:{" "}
+          <span className="font-light bg-[#FBE7E0] text-[#d48389] text-base">
+            {question.category}
+          </span>
+        </h3>
+
+        <p className="bg-[#FBE7E0] px-3 py-1 font-bold text-lg">
+          Created date:{" "}
+          <span className="font-light bg-[#FBE7E0] text-[#d48389] text-base">
+            {question.created_at}
+          </span>
+        </p>
       </div>
-      <div className="answer">
+      <div className="answer lg:flex lg:flex-col lg:justify-center lg:items-center">
         <CreateAnswerForm />
-        <h4>Answers List</h4>
-        <div>
+
+        <div className="answer-list mt-6 p-3 bg-[#F9E4D0] border border-[#FBE7E0] lg:w-[50%]">
           {question.answers !== undefined
             ? question.answers.map((answer) => (
-                <div key={answer._id}>
-                  <div>{answer.answer}</div>
-                  <div>Likes: {answer.likes}</div>
-                  <div>
-                    <button onClick={() => likeAction(answer._id)}>Like</button>
+                <div key={answer._id} className="bg-[#F9E4D0]">
+                  <div className="bg-[#F9E4D0] font-bold">
+                    Answer:{" "}
+                    <p className="bg-[#F9E4D0] font-light">{answer.answer}</p>
+                  </div>
+
+                  <div className="flex mt-8 bg-[#F9E4D0] items-center justify-center">
                     <button onClick={() => dislikeAction(answer._id)}>
-                      Dislike
+                      <AiTwotoneDislike className="bg-[#F9E4D0] " />
+                    </button>
+                    <div className="bg-[#F9E4D0] text-center font-bold text-lg">
+                      Likes: {answer.likes}
+                    </div>
+                    <button onClick={() => likeAction(answer._id)}>
+                      <AiTwotoneLike className="bg-[#F9E4D0] " />
                     </button>
                   </div>
-                  <button onClick={() => handleDeleteAnswer(answer._id)}>
-                    Delete
-                  </button>
+                  <div className="flex mt-8 gap-10 bg-[#F9E4D0] pb-2">
+                    <button
+                      className="w-[50%] bg-[#9C3940] text-[#F9E4D0] rounded-md"
+                      onClick={() => navigate("/")}
+                    >
+                      Back to home
+                    </button>
+                    <button
+                      className="w-[50%] bg-[#9C3940] text-[#F9E4D0] rounded-md"
+                      onClick={() => handleDeleteAnswer(answer._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))
             : 0}
         </div>
       </div>
-      <button onClick={() => navigate("/")}>Back to home</button>
     </div>
   );
 }
